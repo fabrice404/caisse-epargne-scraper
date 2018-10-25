@@ -31,22 +31,20 @@ module.exports = {
       await element.click();
     };
 
-    const loaderVisibility = async () => {
-      return new Promise((resolve, reject) => {
-        let xpath = `//div[contains(@class, "loaderServeur")]`
-        driver.wait(until.elementLocated(By.xpath(xpath))).then(() => {
-          driver.findElement(By.xpath(xpath)).getCssValue(`display`)
-            .then(display => {
-              if (display === `block`) {
-                setTimeout(() => { loaderVisibility().then(resolve) }, 100)
-              } else {
-                resolve()
-              }
-            })
-            .catch(console.log)
-        })
-      })
-    };
+    const loaderVisibility = async () => new Promise((resolve) => {
+      const xpath = '//div[contains(@class, "loaderServeur")]';
+      driver.wait(until.elementLocated(By.xpath(xpath))).then(() => {
+        driver.findElement(By.xpath(xpath)).getCssValue('display')
+          .then((display) => {
+            if (display === 'block') {
+              setTimeout(() => { loaderVisibility().then(resolve); }, 100);
+            } else {
+              resolve();
+            }
+          })
+          .catch(console.log);
+      });
+    });
 
     const result = [];
     try {
@@ -59,7 +57,7 @@ module.exports = {
       // wait for login button visibility
       await getElement('//div[contains(@class, "modal-body")]//form[contains(@class, "identification-form")]/button[@type="submit"]');
 
-      // sleep for half a second because the login input is cleared by javascript after modal opening
+      // sleep for half a second because login input is cleared by javascript after modal opening
       await driver.sleep(500);
 
       // set login input value
@@ -67,43 +65,51 @@ module.exports = {
         document.getElementById('idClient').value = login;
       }, config.login);
 
+      await driver.sleep(200);
+
       // click login button
       click('//div[contains(@class, "modal-body")]//form[contains(@class, "identification-form")]/button[@type="submit"]');
+
+      await driver.sleep(200);
 
       // wait for keypad visibility
       await getElement('//div[contains(@class, "type-password") and contains(@class, "in")]/form/div[contains(@class, "affClavierSecurise")]');
 
+      await driver.sleep(200);
+
       // set password input value
       await driver.executeScript((password) => {
-        document.getElementById('input_password_accessibility').parentElement.style.display = 'block'
-        document.getElementById('codconfstar').parentElement.style.display = 'none'
-        document.getElementById('input_password_accessibility').value = password
+        document.getElementById('input_password_accessibility').parentElement.style.display = 'block';
+        document.getElementById('codconfstar').parentElement.style.display = 'none';
+        document.getElementById('input_password_accessibility').value = password;
       }, config.password);
 
-      // click password button 
+      await driver.sleep(200);
+
+      // click password button
       click('//div[contains(@class, "type-password") and contains(@class, "in")]/form/div[contains(@class, "affClavierClassique")]/div/button[@type="submit"]');
 
       // list accounts
       const accountIds = [];
-      let content = await getContent('//div[@id="MM_ContentMain"]');
+      const content = await getContent('//div[@id="MM_ContentMain"]');
       let $ = cheerio.load(content);
 
       $('.rowClick a[target="_self"]').each((i, a) => {
         accountIds.push($(a).parent().text().trim());
       });
 
-      for (let i = 0; i < accountIds.length; i += 1) {
-        const id = accountIds[i];
+      for (let index = 0; index < accountIds.length; index += 1) {
+        const id = accountIds[index];
 
         // click account button
         await getElement(`//td[text()="${id}"]`);
-        click(`//td[text()="${id}"]`)
+        click(`//td[text()="${id}"]`);
 
         // wait while loader is visible
         await loaderVisibility();
 
-        const balanceElement = await getContent('//span[contains(@class, "bigFont")]')
-        const mainElement = await getContent('//div[@id = "MM_ContentMain"]')
+        // const balanceElement = await getContent('//span[contains(@class, "bigFont")]');
+        const mainElement = await getContent('//div[@id = "MM_ContentMain"]');
 
         $ = cheerio.load(mainElement);
         const balance = getAmountFromText($('#MM_HISTORIQUE_COMPTE .somme .bigFont').text());
@@ -112,13 +118,14 @@ module.exports = {
           done.push({
             date: $(row).children().eq(0).text(),
             name: $(row).children().eq(1).text(),
-            amount: getAmountFromText($(row).children().eq(2).text() + $(row).children().eq(3).text())
-          })
-        })
+            amount: getAmountFromText($(row).children().eq(2).text() +
+              $(row).children().eq(3).text()),
+          });
+        });
 
         // click button MA SYTHESE
-        await getElement('//a[contains(@href, "CPTSYNT0")]')
-        click('//a[contains(@href, "CPTSYNT0")]')
+        await getElement('//a[contains(@href, "CPTSYNT0")]');
+        click('//a[contains(@href, "CPTSYNT0")]');
 
         // wait while loader is visible
         await loaderVisibility();

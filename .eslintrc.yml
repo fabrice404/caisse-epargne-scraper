@@ -2,3 +2,6 @@ extends: airbnb-base
 env:
   node: true
   browser: true
+rules:
+  no-await-in-loop: off
+  no-loop-func: off
