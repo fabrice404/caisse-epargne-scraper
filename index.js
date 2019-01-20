@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const moment = require('moment');
 const { Builder, By, until } = require('selenium-webdriver');
 
 const defaultConfig = {
@@ -116,12 +117,15 @@ module.exports = {
         const done = [];
         $('table.msi-table tr.rowClick').each((i, row) => {
           done.push({
-            date: $(row).children().eq(0).text(),
+            date: moment($(row).children().eq(0).text(), ['dddd, Do MMMM YY', 'DD/MM/YYYY', 'x'])
+              .format('YYYY-MM-DD'),
             name: $(row).children().eq(1).text(),
             amount: getAmountFromText($(row).children().eq(2).text() +
               $(row).children().eq(3).text()),
           });
         });
+
+        await driver.sleep(500);
 
         // click button MA SYTHESE
         await getElement('//a[contains(@href, "CPTSYNT0")]');

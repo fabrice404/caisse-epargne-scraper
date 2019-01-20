@@ -1,6 +1,6 @@
 {
   "name": "caisse-epargne-scraper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Download balance and transactions from Caisse d'Epargne's website",
   "homepage": "https://github.com/fabrice404/caisse-epargne-scraper",
   "bugs": "https://github.com/fabrice404/caisse-epargne-scraper/issues",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "moment": "^2.23.0",
     "selenium-webdriver": "^4.0.0-alpha.1"
   },
   "devDependencies": {
