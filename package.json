@@ -15,16 +15,16 @@
     "url": "https://github.com/fabrice404/caisse-epargne-scraper.git"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2",
-    "moment": "^2.23.0",
-    "selenium-webdriver": "^4.0.0-alpha.1"
+    "cheerio": "^1.0.0-rc.3",
+    "moment": "^2.24.0",
+    "selenium-webdriver": "^4.0.0-alpha.4"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.12.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.1.1"
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
+    "husky": "^3.0.0",
+    "lint-staged": "^9.2.0"
   },
   "scripts": {
     "lint": "eslint ./ --fix",
