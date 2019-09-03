@@ -32,7 +32,7 @@ module.exports = {
       await element.click();
     };
 
-    const loaderVisibility = async () => new Promise((resolve) => {
+    const loaderVisibility = async () => new Promise((resolve, reject) => {
       const xpath = '//div[contains(@class, "loaderServeur")]';
       driver.wait(until.elementLocated(By.xpath(xpath))).then(() => {
         driver.findElement(By.xpath(xpath)).getCssValue('display')
@@ -43,7 +43,7 @@ module.exports = {
               resolve();
             }
           })
-          .catch(console.log);
+          .catch(reject);
       });
     });
 

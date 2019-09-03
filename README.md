@@ -4,11 +4,9 @@ Download balance and latest transactions from Caisse d'Epargne's website.
 
 ## Getting Started
 
-
 ### Prerequisites
 
 To run this module, you will need to download the latest chrome driver [here](http://chromedriver.storage.googleapis.com/index.html).
-
 
 ### Usage
 
@@ -21,11 +19,10 @@ const result = await caisseEpargne.get({
 });
 ```
 
-
 ## Built With
 
-* [Selenium](https://www.npmjs.com/package/selenium-webdriver): browser automation library
-* [Cheerio](https://www.npmjs.com/package/cheerio): jQuery implementation in Node.js
+  * [Selenium](https://www.npmjs.com/package/selenium-webdriver): browser automation library
+  * [Cheerio](https://www.npmjs.com/package/cheerio): jQuery implementation in Node.js
 
 ## License
 
