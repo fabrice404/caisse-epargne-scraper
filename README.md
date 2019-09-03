@@ -21,8 +21,8 @@ const result = await caisseEpargne.get({
 
 ## Built With
 
-  * [Selenium](https://www.npmjs.com/package/selenium-webdriver): browser automation library
-  * [Cheerio](https://www.npmjs.com/package/cheerio): jQuery implementation in Node.js
+* [Selenium](https://www.npmjs.com/package/selenium-webdriver): browser automation library
+* [Cheerio](https://www.npmjs.com/package/cheerio): jQuery implementation in Node.js
 
 ## License
 
