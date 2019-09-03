@@ -821,16 +821,17 @@ htmlparser2@^3.9.1:
     readable-stream "^2.0.2"
 
 husky@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-3.0.0.tgz#de63821a7049dc412b1afd753c259e2f6e227562"
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-3.0.5.tgz#d7db27c346645a8dc52df02aa534a377ad7925e0"
   dependencies:
+    chalk "^2.4.2"
     cosmiconfig "^5.2.1"
     execa "^1.0.0"
     get-stdin "^7.0.0"
     is-ci "^2.0.0"
     opencollective-postinstall "^2.0.2"
     pkg-dir "^4.2.0"
-    please-upgrade-node "^3.1.1"
+    please-upgrade-node "^3.2.0"
     read-pkg "^5.1.1"
     run-node "^1.0.0"
     slash "^3.0.0"
@@ -1501,9 +1502,9 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-please-upgrade-node@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/please-upgrade-node/-/please-upgrade-node-3.1.1.tgz#ed320051dfcc5024fae696712c8288993595e8ac"
+please-upgrade-node@^3.1.1, please-upgrade-node@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/please-upgrade-node/-/please-upgrade-node-3.2.0.tgz#aeddd3f994c933e4ad98b99d9a556efa0e2fe942"
   dependencies:
     semver-compare "^1.0.0"
 
