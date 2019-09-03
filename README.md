@@ -1,4 +1,4 @@
-# caisse-epargne-scraper
+# caisse-epargne-scraper [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c457234e003c42428259104f26c112e7)](https://www.codacy.com/app/fabrice404/caisse-epargne-scraper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fabrice404/caisse-epargne-scraper&amp;utm_campaign=Badge_Grade)
 
 Download balance and latest transactions from Caisse d'Epargne's website.
 
