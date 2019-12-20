@@ -1,18 +1,32 @@
 const cheerio = require('cheerio');
 const moment = require('moment');
 const { Builder, By, until } = require('selenium-webdriver');
+const { Options } = require('selenium-webdriver/chrome');
 
 const defaultConfig = {
   url: 'https://www.caisse-epargne.fr/bretagne-pays-de-loire/particuliers',
   browser: 'chrome',
+  // devtools: true,
 };
 
 module.exports = {
   get: async (_config) => {
     const config = Object.assign(defaultConfig, _config);
-    const driver = new Builder()
-      .forBrowser(config.browser)
-      .build();
+    let driver;
+    if (config.devtools) {
+      const chromeOptions = new Options();
+      chromeOptions.addArguments('--no-sandbox');
+      chromeOptions.addArguments('--disable-setuid-sandbox');
+      chromeOptions.addArguments('--auto-open-devtools-for-tabs');
+      driver = new Builder()
+        .forBrowser(config.browser)
+        .setChromeOptions(chromeOptions)
+        .build();
+    } else {
+      driver = new Builder()
+        .forBrowser(config.browser)
+        .build();
+    }
 
     const getElement = async (selector) => {
       const by = selector.startsWith('/') ? By.xpath(selector) : By.id(selector);
@@ -78,11 +92,19 @@ module.exports = {
     await driver.sleep(200);
 
     // set password input value
-    await driver.executeScript((password) => {
+    await driver.executeScript(() => {
       document.getElementById('input_password_accessibility').parentElement.style.display = 'block';
       document.getElementById('codconfstar').parentElement.style.display = 'none';
-      document.getElementById('input_password_accessibility').value = password;
-    }, config.password);
+      document.getElementById('clavierSecurise').value = 0;
+    });
+
+    await driver.sleep(500);
+
+    const keys = config.password.split('');
+    for (let i = 0; i < keys.length; i += 1) {
+      click(`//div[contains(@class, "affClavierClassique")]/ul[contains(@class, "password-keyboard")]/li[@data-passkey="${keys[i]}"]`);
+      await driver.sleep(100);
+    }
 
     await driver.sleep(200);
 
@@ -108,7 +130,8 @@ module.exports = {
       // wait while loader is visible
       await loaderVisibility();
 
-      // const balanceElement = await getContent('//span[contains(@class, "bigFont")]');
+      await getContent('//span[contains(@class, "bigFont")]');
+
       const mainElement = await getContent('//div[@id = "MM_ContentMain"]');
 
       $ = cheerio.load(mainElement);
